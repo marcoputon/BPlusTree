@@ -38,10 +38,10 @@ class Nodo():
 
 	def insereLista(self, nodo):
 		if self.lenLista() == 0:
+			nodo.pai = self
 			self.lista.append(nodo)
-			#if self.pai:
-			#	self.info = self.lista[0].pai
 			return
+			
 		else:
 			i = 0
 			for j in self.lista:
@@ -49,18 +49,16 @@ class Nodo():
 					return
 					
 				if nodo.info < self.lista[i].info:
+					nodo.pai = self
 					l1 = self.lista[0:i]
 					l2 = self.lista[i:self.lenLista()]
 					l1.append(nodo)
 					self.lista = l1 + l2
-					#if self.pai:
-					#	self.info = self.lista[0].info
 					return
 				
 				elif i >= self.lenLista()-1:
+					nodo.pai = self
 					self.lista.append(nodo)
-					#if self.pai:
-					#	self.info = self.lista[0].info
 					return
 				i += 1
 			
@@ -68,10 +66,21 @@ class Nodo():
 	# Funcao para printar a Arvore bonitinha
 	def mostrarLista(self, k=0):
 
+		m = 0
 		for i in self.lista:
 			i.mostrarLista(k + 4)
+			if self.lenLista() == 0:
+				print "\n",
+			m += 1
 		
-		print " " * k, self.info
+		
+		print " " * k, self.info,
+		
+		
+		if self.pai:
+			print  " |pai:", self.pai.info
+		else:
+			pass
 		
 	
 	def setPai(self, pai):
@@ -93,11 +102,13 @@ class Nodo():
 			aux3 = Nodo(s[0][0].info)
 			aux3.lista = s[0]
 			aux3.pai = self.pai
-
+			aux3.setPai(aux3)
+			
 			# Arruma o indice 1
 			aux2 = Nodo(s[1][0].info)
 			aux2.lista = s[1]
 			aux2.pai = self.pai
+			aux2.setPai(aux2)
 					
 			self.pai.lista[0] = aux3
 			self.pai.lista[1] = aux2
@@ -185,17 +196,12 @@ class Nodo():
 			
 			if self.lenLista() >= t:
 				self = self.ArrumaArvore()
-				for i in self.pai.lista:
-					print i.info, "papai"
 				
 				
 				if self.pai.lenLista() >= t:
 					print "o pai estourou o limite"
 					self = self.pai.ArrumaArvore()
 					
-					# Wow
-					for i in self.lista:
-						print i.info, "papaizinho"
 				else:
 					return self.pai
 									
@@ -209,7 +215,7 @@ R = Nodo(None)
 while True:
 	#try:
 	if True:
-		l = int(raw_input("Digite o numero: "))
+		l = int(raw_input("\nDigite o numero: "))
 		R = R.insereB(Nodo(l))
 		R.mostrarLista()
 	#except:
