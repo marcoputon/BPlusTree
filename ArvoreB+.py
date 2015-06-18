@@ -1,3 +1,6 @@
+import random
+
+
 t = 5
 
 class Nodo():
@@ -23,7 +26,6 @@ class Nodo():
 		else:
 			v = int(t/2) + 1
 		
-		
 		l1 = lista[0:v]
 		l2 = lista[v:t]
 		ind.append(lista[0])
@@ -46,8 +48,7 @@ class Nodo():
 			i = 0
 			for j in self.lista:
 				if nodo.info == self.lista[i].info:
-					return
-					
+					return	
 				if nodo.info < self.lista[i].info:
 					nodo.pai = self
 					l1 = self.lista[0:i]
@@ -55,22 +56,20 @@ class Nodo():
 					l1.append(nodo)
 					self.lista = l1 + l2
 					return
-				
 				elif i >= self.lenLista()-1:
 					nodo.pai = self
 					self.lista.append(nodo)
 					return
+					
 				i += 1
 			
 			
 	# Funcao para printar a Arvore bonitinha
 	def mostrarLista(self, k=0):
-		m = 0
 		for i in self.lista:
 			i.mostrarLista(k + 4)
 			if self.lenLista() == 0:
 				print "\n",
-			m += 1
 		
 		print " " * k, self.info,
 		
@@ -78,7 +77,6 @@ class Nodo():
 			print  " |pai:", self.pai.info
 		else:
 			pass
-
 	
 	
 	def setPai(self, pai):
@@ -113,22 +111,19 @@ class Nodo():
 			return self.pai.lista[0]
 		
 		# Se o pai nao for None:
-		else:
-			print "O PAI NAO EH NONE"										
+		else:										
 			# Arruma o indice 0
 			aux3 = Nodo(s[0][0].info)
 			aux3.lista = s[0]
 			aux3.pai = self.pai
 			aux3.setPai(aux3)
 
-
 			# Arruma o indice 1
 			aux2 = Nodo(s[1][0].info)
 			aux2.lista = s[1]
 			aux2.pai = self.pai
 			aux2.setPai(aux2)
-						
-					
+								
 			indi = 0
 			for i in self.pai.lista:
 				if i == self:
@@ -137,22 +132,9 @@ class Nodo():
 			
 			# Insere no pai	
 			self.pai.insereLista(aux3)
-			
-			# Insere no pai
 			self.pai.insereLista(aux2)
-				
-				
-				
-				
-				
-			for i in aux3.lista:
-				print i.info, "|ESTOU RETORNADO",
-			print "\n",
 			
 			return aux3
-			
-			
-			
 			
 			
 	def insereB(self, nodo):
@@ -162,8 +144,10 @@ class Nodo():
 			return self
 		else:
 			i = 0
+			
 			while i < self.lenLista():
 				if i+1 < self.lenLista():
+					
 					# Se for menor
 					if nodo.info < self.lista[i+1].info:
 						
@@ -176,7 +160,6 @@ class Nodo():
 						else:
 							self.lista[i].insereB(nodo)
 							break		
-				
 				else:
 					if self.lista[i].lenLista() == 0:
 						self.insereLista(nodo)
@@ -193,42 +176,59 @@ class Nodo():
 			if self.lenLista() >= t:
 				self = self.ArrumaArvore()
 				
-				###                  ###
-				self.pai.mostrarLista()
-				print "\n\n\n"
-				###                  ###
-				
 				if self.lenLista() >= t:
-					print "self.pai eh maior, porra"
 					self = self.ArrumaArvore()
-					
-					self.pai.mostrarLista()
-					print "\n\n\n"
-					
 				else:
-					return self.pai
-									
-									
-									
+					return self.pai	
 			else:
 				return self
 			
 			
-			
 R = Nodo(None)
 
+def tEntrada():
+	raw_input("Entrada invalida. Pressione qualquer tecla para continuar")
+
+def insereN(n):
+	N = n
+	R = Nodo(None)
+	while n > 0:
+		nN = random.random()
+		print random.random()
+		R = R.insereB(Nodo(nN))
+		n -= 1
+
 while True:
-	#try:
-	if True:
-		l = int(raw_input("\nDigite o numero: "))
-		R = R.insereB(Nodo(l))
-		R.mostrarLista()
+	try:
+		t = int(raw_input("Qual o tamanho maximo do nodo? "))
+		break
+	except:
+		t = 5
+		raw_input("Favor digitar um numero inteiro.")
+		
+while True:
+	print(chr(27) + "[2J")
+	try:
+		op = int(raw_input("1) Inserir N elementos\n2) Mostrar arvore\n3) Sair\n\nOpcao: "))
+	except:
+		tEntrada()
+		continue
 	
-	#except:
-		#raw_input("Um numero!!!")
-								
-
-
-##### Area de testes #####
-
-##########################
+	if op is 1:
+		while True:
+			try:
+				z = int(raw_input("Digite quantos elementos quer inserir: "))
+				insereN(z)
+				break
+			except:
+				tEntrada()
+	
+	elif op is 2:
+		R.mostrarLista()
+		lixo = raw_input("Pressione qualquer tecla para continuar.")
+	
+	elif op is 3:
+		break
+	
+	else:
+		tEntrada()
