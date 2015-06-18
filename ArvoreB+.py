@@ -65,7 +65,6 @@ class Nodo():
 			
 	# Funcao para printar a Arvore bonitinha
 	def mostrarLista(self, k=0):
-
 		m = 0
 		for i in self.lista:
 			i.mostrarLista(k + 4)
@@ -73,22 +72,21 @@ class Nodo():
 				print "\n",
 			m += 1
 		
-		
 		print " " * k, self.info,
-		
 		
 		if self.pai:
 			print  " |pai:", self.pai.info
 		else:
 			pass
-		
+
+	
 	
 	def setPai(self, pai):
 		for i in self.lista:
 			i.pai = pai
 	
-	def ArrumaArvore(self):
-		
+	
+	def ArrumaArvore(self):	
 		s = self.split(self.lista)
 		
 		# Se o pai for a raiz	
@@ -116,21 +114,19 @@ class Nodo():
 		
 		# Se o pai nao for None:
 		else:
-			print "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"										
+			print "O PAI NAO EH NONE"										
 			# Arruma o indice 0
 			aux3 = Nodo(s[0][0].info)
 			aux3.lista = s[0]
 			aux3.pai = self.pai
 			aux3.setPai(aux3)
 
+
 			# Arruma o indice 1
 			aux2 = Nodo(s[1][0].info)
 			aux2.lista = s[1]
 			aux2.pai = self.pai
 			aux2.setPai(aux2)
-					
-			for i in self.pai.lista:
-				print i.info, "antes de inserir"
 						
 					
 			indi = 0
@@ -141,18 +137,18 @@ class Nodo():
 			
 			# Insere no pai	
 			self.pai.insereLista(aux3)
-			print "aux3:", str(aux3.info) + ":"
-			for i in self.pai.lista:
-				print i.info, "insere 0"
-			
-			
 			
 			# Insere no pai
 			self.pai.insereLista(aux2)
-			print "aux2:", str(aux2.info) + ":"
-			for i in self.pai.lista:
-				print i.info, "insere 1"
 				
+				
+				
+				
+				
+			for i in aux3.lista:
+				print i.info, "|ESTOU RETORNADO",
+			print "\n",
+			
 			return aux3
 			
 			
@@ -197,13 +193,22 @@ class Nodo():
 			if self.lenLista() >= t:
 				self = self.ArrumaArvore()
 				
+				###                  ###
+				self.pai.mostrarLista()
+				print "\n\n\n"
+				###                  ###
 				
-				if self.pai.lenLista() >= t:
-					print "o pai estourou o limite"
-					self = self.pai.ArrumaArvore()
+				if self.lenLista() >= t:
+					print "self.pai eh maior, porra"
+					self = self.ArrumaArvore()
+					
+					self.pai.mostrarLista()
+					print "\n\n\n"
 					
 				else:
 					return self.pai
+									
+									
 									
 			else:
 				return self
@@ -218,15 +223,11 @@ while True:
 		l = int(raw_input("\nDigite o numero: "))
 		R = R.insereB(Nodo(l))
 		R.mostrarLista()
-	#except:
 	
+	#except:
 		#raw_input("Um numero!!!")
 								
 
-
-
-print "\n\n\n"
-R.mostrarLista()
 
 ##### Area de testes #####
 
