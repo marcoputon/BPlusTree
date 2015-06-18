@@ -1,6 +1,5 @@
 import random
 
-
 t = 5
 
 class Nodo():
@@ -190,12 +189,11 @@ def tEntrada():
 	raw_input("Entrada invalida. Pressione qualquer tecla para continuar")
 
 def insereN(n):
+	global R
 	N = n
 	R = Nodo(None)
 	while n > 0:
-		nN = random.random()
-		print random.random()
-		R = R.insereB(Nodo(nN))
+		R = R.insereB(Nodo(random.randint(0, N)))
 		n -= 1
 
 while True:
@@ -219,6 +217,7 @@ while True:
 			try:
 				z = int(raw_input("Digite quantos elementos quer inserir: "))
 				insereN(z)
+				raw_input("Pressione qualquer tecla para continuar.")
 				break
 			except:
 				tEntrada()
