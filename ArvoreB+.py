@@ -38,6 +38,11 @@ class Nodo():
 
 
 	def insereLista(self, nodo):
+		#i = len(self.lista) - 1
+		#while i >= 0 and self.lista[i] > nodo.info:
+		#	i = i - 1
+		#self.lista.insert(i+1, nodo)
+		
 		if self.lenLista() == 0:
 			nodo.pai = self
 			self.lista.append(nodo)
@@ -50,10 +55,7 @@ class Nodo():
 					return	
 				if nodo.info < self.lista[i].info:
 					nodo.pai = self
-					l1 = self.lista[0:i]
-					l2 = self.lista[i:self.lenLista()]
-					l1.append(nodo)
-					self.lista = l1 + l2
+					self.lista.insert(i, nodo)
 					return
 				elif i >= self.lenLista()-1:
 					nodo.pai = self
@@ -61,8 +63,8 @@ class Nodo():
 					return
 					
 				i += 1
-			
-			
+		
+
 	# Funcao para printar a Arvore bonitinha
 	def mostrarLista(self, k=0):
 		for i in self.lista:
@@ -208,7 +210,8 @@ while True:
 	print(chr(27) + "[2J")
 	try:
 		op = int(raw_input("1) Inserir N elementos\n2) Mostrar arvore\n3) Sair\n\nOpcao: "))
-	except:
+	except Exception as e:
+		print e
 		tEntrada()
 		continue
 	
@@ -219,7 +222,8 @@ while True:
 				insereN(z)
 				raw_input("Pressione qualquer tecla para continuar.")
 				break
-			except:
+			except Exception as e:
+				print e
 				tEntrada()
 	
 	elif op is 2:
